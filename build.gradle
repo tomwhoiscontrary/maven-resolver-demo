@@ -1,0 +1,37 @@
+plugins {
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'info.picocli:picocli:4.6.3'
+
+    implementation 'org.apache.maven.resolver:maven-resolver-impl:1.8.1'
+    implementation 'org.apache.maven:maven-resolver-provider:3.8.6'
+
+    // these are needed by the demo module, to build a complete resolver around the resolver implementation
+    implementation 'org.apache.maven.resolver:maven-resolver-connector-basic:1.8.1'
+    implementation 'org.apache.maven.resolver:maven-resolver-transport-http:1.8.1'
+    implementation 'org.apache.maven.resolver:maven-resolver-transport-file:1.8.1'
+
+    // these are needed to fire up the injector which can instantiate the module
+    implementation 'javax.inject:javax.inject:1'
+    implementation 'com.google.inject:guice:5.1.0'
+    implementation 'org.eclipse.sisu:org.eclipse.sisu.inject:0.3.5'
+
+    // someething uses SLF4J, so provide an implementation
+    runtimeOnly 'org.slf4j:slf4j-simple:1.7.36'
+}
+
+application {
+    mainClass = 'demo.resolver.Main'
+}
